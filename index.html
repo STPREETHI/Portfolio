@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preethi S.T | Portfolio</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(180deg, #1e1e3f, #2a1a5e);
+            color: #e0e0ff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: rgba(30, 30, 63, 0.7);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            transform: translateY(-100%);
+        }
+
+        .navbar.visible {
+            transform: translateY(0);
+            background: rgba(30, 30, 63, 0.9);
+        }
+
+        .logo {
+            color: #ff4d6d;
+            font-size: 2rem;
+            font-weight: 700;
+            text-shadow: 0 0 15px rgba(255, 77, 109, 0.5);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: #e0e0ff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -6px;
+            left: 0;
+            background: #00ffaa;
+            transition: width 0.4s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #00ffaa;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 7px;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 35px;
+            height: 4px;
+            background: #ff4d6d;
+            border-radius: 3px;
+            transition: all 0.4s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        #hero {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #2a1a5e, #ff4d6d, #00ffaa);
+            background-size: 300% 300%;
+            animation: gradientPulse 20s ease infinite;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes gradientPulse {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 10s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 2rem;
+            border: 6px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 30px rgba(0, 255, 170, 0.5);
+            transform: perspective(1000px) rotateY(0deg);
+            transition: transform 0.6s ease, box-shadow 0.6s ease;
+        }
+
+        .profile-img:hover {
+            transform: perspective(1000px) rotateY(10deg);
+            box-shadow: 0 0 50px rgba(0, 255, 170, 0.8);
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #e0e0ff;
+            text-shadow: 0 0 20px rgba(255, 77, 109, 0.5);
+            animation: slideIn 1s ease-out;
+        }
+
+        .hero-content p {
+            font-size: 1.8rem;
+            margin-bottom: 2.5rem;
+            color: #c0c0ff;
+            animation: slideIn 1.2s ease-out;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 1.2rem 2.5rem;
+            background: rgba(255, 77, 109, 0.8);
+            color: #e0e0ff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-8px) scale(1.05);
+            background: rgba(0, 255, 170, 0.8);
+            box-shadow: 0 12px 30px rgba(0, 255, 170, 0.6);
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(100px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section {
+            padding: 7rem 5%;
+            max-width: 1300px;
+            margin: 0 auto;
+            background: rgba(30, 30, 63, 0.5);
+            border-radius: 25px;
+            margin-bottom: 4rem;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            transform: perspective(1000px);
+        }
+
+        .section h2 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: #ff4d6d;
+            text-shadow: 0 0 15px rgba(255, 77, 109, 0.3);
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            width: 120px;
+            height: 5px;
+            background: #00ffaa;
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .skills-grid, .interests-grid, .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .skill-card, .project-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            transform: perspective(1000px) rotateY(0deg);
+        }
+
+        .project-card {
+            cursor: pointer;
+        }
+
+        .skill-card:hover, .project-card:hover {
+            transform: perspective(1000px) rotateY(5deg) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 255, 170, 0.4);
+        }
+
+        .skill-card h3, .project-card h3 {
+            color: #ff4d6d;
+            margin-bottom: 1.5rem;
+        }
+
+        .skill-card p, .project-card p {
+            color: #c0c0ff;
+        }
+
+        .project-card .tech-stack {
+            font-size: 0.9rem;
+            color: #00ffaa;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .interest-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.3rem;
+            color: #00ffaa;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.5s ease, background 0.5s ease;
+        }
+
+        .interest-item:hover {
+            transform: scale(1.1) rotate(3deg);
+            background: rgba(255, 77, 109, 0.2);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border-radius: 20px;
+            border-left: 6px solid #ff4d6d;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.5s ease;
+        }
+
+        .timeline-item:hover {
+            transform: translateX(15px);
+        }
+
+        .timeline-item h3 {
+            color: #00ffaa;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-item p {
+            color: #c0c0ff;
+        }
+
+        .contact-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .contact-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 40px rgba(0, 255, 170, 0.4);
+        }
+
+        .contact-card p {
+            margin: 1.5rem 0;
+            color: #c0c0ff;
+            font-size: 1.2rem;
+        }
+
+        .contact-card a {
+            color: #ff4d6d;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.4s ease;
+        }
+
+        .contact-card a:hover {
+            color: #00ffaa;
+        }
+
+        /* Coding Profiles Section */
+        .coding-profiles {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            margin-top: 4rem;
+            padding: 3rem;
+            background: rgba(30, 30, 63, 0.6);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .coding-profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: #e0e0ff;
+        }
+
+        .coding-profile:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 255, 170, 0.3);
+        }
+
+        .coding-profile-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #ff4d6d, #00ffaa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: white;
+            text-decoration: none;
+        }
+
+        .coding-profile span {
+            font-weight: 600;
+            text-align: center;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(30, 30, 63, 0.95), rgba(42, 26, 94, 0.95));
+            padding: 3rem;
+            border-radius: 25px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: modalScaleIn 0.3s ease;
+        }
+
+        @keyframes modalScaleIn {
+            from { transform: scale(0.7); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            font-size: 2rem;
+            color: #ff4d6d;
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: #00ffaa;
+            transform: rotate(90deg);
+        }
+
+        .modal h3 {
+            color: #ff4d6d;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .modal .description {
+            color: #c0c0ff;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .modal .tech-stack {
+            background: rgba(0, 255, 170, 0.1);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #00ffaa;
+            font-weight: 600;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .github-btn {
+            background: linear-gradient(135deg, #ff4d6d, #ff6b8a);
+            color: white;
+        }
+
+        .demo-btn {
+            background: linear-gradient(135deg, #00ffaa, #00cc88);
+            color: white;
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        footer {
+            text-align: center;
+            padding: 4rem;
+            background: rgba(30, 30, 63, 0.9);
+            color: #c0c0ff;
+            font-size: 1.2rem;
+            box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: rgba(30, 30, 63, 0.95);
+                padding: 3rem 0;
+                text-align: center;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+
+            .hero-content p {
+                font-size: 1.3rem;
+            }
+
+            .section h2 {
+                font-size: 2.5rem;
+            }
+
+            .profile-img {
+                width: 160px;
+                height: 160px;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 2rem;
+                margin: 1rem;
+            }
+
+            .modal h3 {
+                font-size: 2rem;
+            }
+
+            .modal-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .coding-profiles {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .coding-profile {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Preethi S.T</div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#interests">Interests</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <section id="hero">
+        <div class="hero-content">
+            <img src="C:/Users/PREETHI/OneDrive/Desktop/certificates/pic.jpg" alt="Preethi S.T Profile" class="profile-img">
+            <h1>Preethi S.T</h1>
+            <p>Aspiring Data Scientist & AI Enthusiast</p>
+            <a href="#projects" class="cta-btn">View My Work</a>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <h2>About Me</h2>
+        <p>I'm a Master's Degree student in Decision and Computing Sciences at Coimbatore Institute of Technology, graduating in 2028. I love building smart systems, exploring AI, and leading technical teams. My passion for problem-solving and creativity drives me to tackle complex challenges and contribute to innovative solutions.</p>
+    </section>
+
+    <section id="skills" class="section">
+        <h2>Skills & Tools</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <h3>Languages</h3>
+                <p>Python, HTML, CSS, SQL, C, R, Java</p>
+            </div>
+            <div class="skill-card">
+                <h3>Tools</h3>
+                <p>Jupyter, VSCode, Streamlit, Git, GitHub, MySQL</p>
+            </div>
+            <div class="skill-card">
+                <h3>Concepts</h3>
+                <p>Data Science, Machine Learning, Web Development, DSA</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="interests" class="section">
+        <h2>Areas of Interest</h2>
+        <div class="interests-grid">
+            <div class="interest-item">Cybersecurity</div>
+            <div class="interest-item">Data Science</div>
+            <div class="interest-item">Machine Learning</div>
+            <div class="interest-item">AI Applications</div>
+            <div class="interest-item">Web Development</div>
+            <div class="interest-item">Open Source</div>
+        </div>
+    </section>
+
+    <section id="experience" class="section">
+        <h2>Experience</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <h3>Social Media Team Member</h3>
+                <p>Datalytics • Apr 2024 – May 2025</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Treasurer</h3>
+                <p>Datalytics • May 2025 – Present</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Technical Team Head</h3>
+                <p>403 Strats • May 2025 – Present</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <h2>Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card" data-project="smart-parcel">
+                <h3>Smart Parcel Optimization System</h3>
+                <div class="tech-stack">Merge Sort, TSP, Dijkstra, Branch & Bound</div>
+                <p>An intelligent logistics optimization platform for efficient parcel delivery routing.</p>
+            </div>
+            <div class="project-card" data-project="financial-ai">
+                <h3>Financial Analytics AI Platform</h3>
+                <div class="tech-stack">Python, Machine Learning, Real-time APIs</div>
+                <p>AI-powered financial analysis with real-time stock prediction and Black-Scholes pricing.</p>
+            </div>
+            <div class="project-card" data-project="social-media">
+                <h3>Social Media Engagement Predictor App</h3>
+                <div class="tech-stack">ML Classification, Clustering, Forecasting</div>
+                <p>Machine learning application for predicting social media engagement patterns.</p>
+            </div>
+            <div class="project-card" data-project="crm-system">
+                <h3>CRM Relationship Management System</h3>
+                <div class="tech-stack">Java, MySQL, JSP</div>
+                <p>A comprehensive customer relationship management system for business operations.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2>Contact</h2>
+        <div class="contact-card">
+            <p><strong>Phone:</strong> <a href="tel:+916382067209">+91 6382067209</a> (Contact no)</p>
+            <p><strong>Email:</strong> <a href="mailto:stpreethi1808@gmail.com">stpreethi1808@gmail.com</a></p>
+            <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/preethi-st-06a320280" target="_blank">linkedin.com/in/preethi-st</a></p>
+            <p><strong>GitHub:</strong> <a href="https://github.com/STPREETHI" target="_blank">github.com/STPREETHI</a></p>
+        </div>
+        
+        <div class="coding-profiles">
+            <a href="https://www.geeksforgeeks.org/user/stpreethpek/" target="_blank" class="coding-profile">
+                <div class="coding-profile-icon">GFG</div>
+                <span>GeeksforGeeks</span>
+            </a>
+            <a href="https://leetcode.com/u/preethiST/" target="_blank" class="coding-profile">
+                <div class="coding-profile-icon">LC</div>
+                <span>LeetCode</span>
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Preethi S.T. All rights reserved.</p>
+    </footer>
+
+    <!-- Project Modals -->
+    <div id="modal-smart-parcel" class="modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h3>Smart Parcel Optimization System</h3>
+            <div class="tech-stack">Tech Stack: Merge Sort, TSP, Dijkstra Algorithm, Branch & Bound</div>
+            <div class="description">
+                An intelligent logistics optimization platform that revolutionizes parcel delivery routing. This system combines multiple advanced algorithms including Merge Sort for efficient data organization, Traveling Salesman Problem (TSP) optimization for route planning, Dijkstra's algorithm for shortest path finding, and Branch & Bound techniques for optimal solution discovery. The platform significantly reduces delivery time and operational costs while improving customer satisfaction.
+            </div>
+            <div class="modal-buttons">
+                <a href="https://smartparceloptimizationsystem-cw672kk8qw2ncbdncrbwwv.streamlit.app/" target="_blank" class="modal-btn demo-btn">Live Demo</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-financial-ai" class="modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h3>Financial Analytics AI Platform</h3>
+            <div class="tech-stack">Tech Stack: Python, Machine Learning, Real-time Stock APIs, Black-Scholes Model</div>
+            <div class="description">
+                A comprehensive AI-powered financial analysis platform that provides real-time stock market predictions and sophisticated pricing models. The system leverages machine learning algorithms for predictive analytics, integrates real-time market data APIs, and implements the Black-Scholes model for options pricing. This platform empowers traders and analysts with data-driven insights for informed investment decisions.
+            </div>
+            <div class="modal-buttons">
+                <a href="https://financial-analytics-ai-platform-rtgyctap44glwkaxtmrags.streamlit.app" target="_blank" class="modal-btn demo-btn">Live Demo</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-social-media" class="modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h3>Social Media Engagement Predictor App</h3>
+            <div class="tech-stack">Tech Stack: Machine Learning Classification, Clustering Algorithms, Time Series Forecasting</div>
+            <div class="description">
+                An advanced machine learning application designed to predict social media engagement patterns with high accuracy. The system employs classification algorithms to categorize content performance, clustering techniques to identify user behavior patterns, and forecasting models to predict future engagement trends. This tool helps social media managers and content creators optimize their strategies for maximum reach and engagement.
+            </div>
+            <div class="modal-buttons">
+                <a href="https://github.com/STPREETHI/Social_Media_Engagement_Ptredictor" target="_blank" class="modal-btn github-btn">GitHub Repo</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-crm-system" class="modal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <h3>CRM Relationship Management System</h3>
+            <div class="tech-stack">Tech Stack: Java, MySQL, JSP (JavaServer Pages)</div>
+            <div class="description">
+                A comprehensive Java-based customer relationship management system designed to streamline business operations and enhance customer interactions. The system handles client data management, communication tracking, sales pipeline monitoring, and provides detailed analytics for business insights. Built with robust database architecture using MySQL and dynamic web interfaces through JSP, this CRM solution improves customer retention and operational efficiency.
+            </div>
+            <div class="modal-buttons">
+                <a href="https://github.com/ashhwiithac22/Customer_Realtionship_Management-System" target="_blank" class="modal-btn github-btn">GitHub Repo</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            const navbar = document.querySelector('.navbar');
+
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking a link
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                });
+            });
+
+            // Navbar scroll behavior
+            let lastScroll = 0;
+            window.addEventListener('scroll', () => {
+                const currentScroll = window.pageYOffset;
+                
+                if (currentScroll <= 0) {
+                    navbar.classList.remove('scrolled');
+                    navbar.classList.add('visible');
+                    return;
+                }
+
+                if (currentScroll > lastScroll && !navbar.classList.contains('scrolled')) {
+                    navbar.classList.add('scrolled');
+                    navbar.classList.remove('visible');
+                } else if (currentScroll < lastScroll && navbar.classList.contains('scrolled')) {
+                    navbar.classList.remove('scrolled');
+                    navbar.classList.add('visible');
+                }
+                lastScroll = currentScroll;
+            });
+
+            // Project modal functionality
+            const projectCards = document.querySelectorAll('.project-card');
+            const modals = document.querySelectorAll('.modal');
+            const closeButtons = document.querySelectorAll('.modal-close');
+
+            projectCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const projectId = card.getAttribute('data-project');
+                    document.getElementById(`modal-${projectId}`).classList.add('active');
+                });
+            });
+
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    button.closest('.modal').classList.remove('active');
+                });
+            });
+
+            // Close modal when clicking outside
+            modals.forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                    }
+                });
+            });
+
+            // Create floating particles
+            function createParticles() {
+                const hero = document.getElementById('hero');
+                const particleCount = 30;
+                
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.classList.add('particle');
+                    
+                    // Random position
+                    particle.style.left = `${Math.random() * 100}%`;
+                    particle.style.top = `${Math.random() * 100}%`;
+                    
+                    // Random size
+                    const size = Math.random() * 5 + 3;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    
+                    // Random animation duration
+                    particle.style.animationDuration = `${Math.random() * 10 + 5}s`;
+                    particle.style.animationDelay = `${Math.random() * 5}s`;
+                    
+                    hero.appendChild(particle);
+                }
+            }
+
+            createParticles();
+        });
+    </script>
+</body>
+</html>
