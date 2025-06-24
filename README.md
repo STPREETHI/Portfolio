@@ -3,7 +3,7 @@
 A modern, responsive personal portfolio website built using HTML and CSS. This portfolio highlights my technical skills, projects, certifications, and professional experience. It is designed to showcase my work for internship and job opportunities in software development, data science, and cybersecurity.
 
 ## 🔗 Live Demo
-👉 
+👉 https://guileless-pegasus-4c49ee.netlify.app/
 
 ---
 
